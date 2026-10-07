@@ -31,14 +31,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Bienvenue sur l'ecran d'acceuil",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
               SizedBox(height: 20),
 
               Expanded(
@@ -50,7 +42,52 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              Spacer(),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/home');
+                    },
+                    tooltip: 'Accueil',
+                    icon: const Icon(Icons.home),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/research');
+                    },
+                    tooltip: 'Recherche',
+                    icon: const Icon(Icons.search),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/community');
+                    },
+                    tooltip: 'Communauté',
+                    icon: const Icon(Icons.group),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/notifications');
+                    },
+                    tooltip: 'Notifications',
+                    icon: const Icon(Icons.notifications),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/messages');
+                    },
+                    tooltip: 'Messages',
+                    icon: const Icon(Icons.mail),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
 
             ],
           ),
