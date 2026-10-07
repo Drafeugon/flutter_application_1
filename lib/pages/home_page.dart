@@ -26,10 +26,10 @@ class _HomePageState extends State<HomePage> {
       body: Form(
         key: formKey,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 20),
 
@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-
             ],
           ),
         ),
@@ -104,46 +103,103 @@ class _TweetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(tweet.profilePictureUrl),
-      ),
-      title: Row(
-        children: [
-          Text(tweet.name, style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(width: 5),
-          if (tweet.verified == 'true')
-            Icon(Icons.check_circle, color: Colors.blue, size: 16),
-          SizedBox(width: 5),
-          Text(tweet.handle, style: TextStyle(color: Colors.grey)),
-        ],
-      ),
-      subtitle: Column(
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(tweet.content),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              Icon(Icons.comment, size: 16, color: Colors.grey),
-              SizedBox(width: 5),
-              Text(tweet.comments, style: TextStyle(color: Colors.grey)),
-              SizedBox(width: 15),
-              Icon(Icons.repeat, size: 16, color: Colors.grey),
-              SizedBox(width: 5),
-              Text(tweet.retweets, style: TextStyle(color: Colors.grey)),
-              SizedBox(width: 15),
-              Icon(Icons.favorite, size: 16, color: Colors.grey),
-              SizedBox(width: 5),
-              Text(tweet.likes, style: TextStyle(color: Colors.grey)),
-              SizedBox(width: 15),
-              Icon(Icons.remove_red_eye, size: 16, color: Colors.grey),
-              SizedBox(width: 5),
-              Text(tweet.views, style: TextStyle(color: Colors.grey)),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 12, top: 8),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(tweet.profilePictureUrl),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12, top: 8, bottom: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5,
+                    children: [
+                      Text(
+                        tweet.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      if (tweet.verified == 'true')
+                        const Icon(
+                          Icons.check_circle,
+                          color: Colors.blue,
+                          size: 16,
+                        ),
+                      Text(
+                        tweet.handle,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    tweet.content,
+                    softWrap: true,
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _TweetMetric(
+                        icon: Icons.comment,
+                        value: tweet.comments,
+                      ),
+                      _TweetMetric(
+                        icon: Icons.repeat,
+                        value: tweet.retweets,
+                      ),
+                      _TweetMetric(
+                        icon: Icons.favorite,
+                        value: tweet.likes,
+                      ),
+                      _TweetMetric(
+                        icon: Icons.remove_red_eye,
+                        value: tweet.views,
+                      ),
+                    ].map((metric) => Expanded(child: metric)).toList(),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _TweetMetric extends StatelessWidget {
+  final IconData icon;
+  final String value;
+
+  const _TweetMetric({required this.icon, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 16, color: Colors.grey),
+        const SizedBox(width: 5),
+        Flexible(
+          child: Text(
+            value,
+            style: const TextStyle(color: Colors.grey),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }

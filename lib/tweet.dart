@@ -15,7 +15,7 @@ class Tweet {
       handle: '@johndoe',
       verified: 'true',
       time: DateTime.now().subtract(const Duration(minutes: 5)),
-      content: 'This is a sample tweet content.',
+      content: 'This is a sample tweet content.ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
       comments: '10',
       retweets: '5',
       likes: '20',
