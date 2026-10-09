@@ -214,18 +214,3 @@ class _TweetMetric extends StatelessWidget {
     );
   }
 }
-
-class SettingsPersistence {
-  Future<void> saveSettings(String theme) async {
-    final prefs = SharedPreferencesAsync();
-    await prefs.setString('theme', theme);
-  }
-
-  Future<Map<String, String>> loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    final theme = prefs.getString('theme') ?? '';
-    return {
-      'theme': theme,
-    };
-  }
-}

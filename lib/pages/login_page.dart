@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/home_page.dart';
+import 'package:flutter_application_1/persistences/settings_persistence.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +14,32 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   String mail = '';
   String password = '';
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+   @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final settings = await SettingsPersistence.loadSettings();
+    if (!mounted) return;
+    setState(() {
+      mail = settings['mail'] ?? '';
+      password = settings['password'] ?? '';
+      mailController.text = mail;
+      passwordController.text = password;
+    });
+  }
+
+  @override
+  void dispose() {
+    mailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
 
   @override

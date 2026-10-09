@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_application_1/persistences/settings_persistence.dart';
 
 
 class SettingsPage extends StatefulWidget {
@@ -23,9 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.remove('mail');
-            await prefs.remove('password');
+            await SettingsPersistence.saveSettings('', '');
             // ignore: use_build_context_synchronously
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage()));
           },
