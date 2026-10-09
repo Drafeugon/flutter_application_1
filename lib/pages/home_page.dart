@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/settings_page.dart';
 import 'package:flutter_application_1/tweet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final formKey = GlobalKey<FormState>();
+  final prefs = SharedPreferencesAsync();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/home_page');
                     },
                     tooltip: 'Accueil',
                     icon: const Icon(Icons.home),
@@ -84,6 +87,14 @@ class _HomePageState extends State<HomePage> {
                     },
                     tooltip: 'Messages',
                     icon: const Icon(Icons.mail),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+                    },
+                    tooltip: 'Paramètres',
+                    icon: const Icon(Icons.settings),
                     color: Colors.white,
                   ),
                 ],
@@ -201,5 +212,20 @@ class _TweetMetric extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class SettingsPersistence {
+  Future<void> saveSettings(String theme) async {
+    final prefs = SharedPreferencesAsync();
+    await prefs.setString('theme', theme);
+  }
+
+  Future<Map<String, String>> loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    final theme = prefs.getString('theme') ?? '';
+    return {
+      'theme': theme,
+    };
   }
 }
